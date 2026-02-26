@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Demon Nodes | Reseller Program</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap');
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background: #050505;
+            color: white;
+            overflow-x: hidden;
+        }
+
+        /* Hero Background with Animation */
+        .reseller-hero {
+            position: relative;
+            min-height: 100vh;
+            width: 100%;
+            background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.8)), 
+                        url('image_6.png'); /* आपकी दी हुई इमेज */
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 100px 20px;
+        }
+
+        /* Glowing Text Animation */
+        .glow-text {
+            text-shadow: 0 0 20px rgba(168, 85, 247, 0.8);
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
+        }
+
+        /* Premium Card Design */
+        .reward-card {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 24px;
+            padding: 30px;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .reward-card:hover {
+            transform: translateY(-10px);
+            border-color: #a855f7;
+            box-shadow: 0 0 30px rgba(168, 85, 247, 0.3);
+            background: rgba(168, 85, 247, 0.05);
+        }
+
+        .reward-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(168,85,247,0.1) 0%, transparent 70%);
+            pointer-events: none;
+        }
+
+        .badge-hot {
+            background: linear-gradient(90deg, #ef4444, #f97316);
+            padding: 4px 12px;
+            border-radius: 50px;
+            font-size: 10px;
+            font-weight: 800;
+            text-transform: uppercase;
+            position: absolute;
+            top: 20px;
+            right: 20px;
+        }
+
+        .btn-join {
+            background: #a855f7;
+            transition: 0.3s;
+            box-shadow: 0 0 15px rgba(168, 85, 247, 0.4);
+        }
+
+        .btn-join:hover {
+            background: #9333ea;
+            box-shadow: 0 0 25px rgba(168, 85, 247, 0.6);
+            transform: scale(1.05);
+        }
+    </style>
+</head>
+<body>
+
+    <section class="reseller-hero">
+        <div class="text-center mb-16">
+            <div class="inline-block px-4 py-1 rounded-full bg-purple-500/10 border border-purple-500/30 text-purple-400 text-xs font-bold uppercase tracking-widest mb-4">
+                Exclusive Opportunity
+            </div>
+            <h1 class="text-5xl md:text-7xl font-black mb-6 tracking-tighter glow-text">
+                RESELLER <span class="text-purple-500">PROGRAM</span>
+            </h1>
+            <p class="text-gray-400 max-w-2xl mx-auto text-lg">
+                Demon Nodes के साथ जुड़ें, सेल्स करवाएं और पाएं कैश रिवॉर्ड्स के साथ फ्री हाई-परफॉरमेंस सर्वर्स। 
+                <br><span class="text-white font-bold">1 Week Target Challenges!</span>
+            </p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8 w-full max-w-6xl px-4">
+            
+            <div class="reward-card">
+                <div class="badge-hot">Starter Challenge</div>
+                <h3 class="text-xl font-bold mb-2">Tier 1</h3>
+                <div class="text-4xl font-black text-purple-500 mb-4">500 <span class="text-sm text-gray-400">Sales</span></div>
+                <ul class="space-y-3 mb-8 text-sm text-gray-300">
+                    <li><i class="fas fa-check-circle text-green-500 mr-2"></i> ₹150 Instant Cash</li>
+                    <li><i class="fas fa-server text-blue-500 mr-2"></i> 4GB RAM Dedicated Server</li>
+                    <li><i class="fas fa-clock text-orange-500 mr-2"></i> 1 Week Deadline</li>
+                </ul>
+                <button class="w-full btn-join py-3 rounded-xl font-bold uppercase text-xs">Join Challenge</button>
+            </div>
+
+            <div class="reward-card border-purple-500/50" style="background: rgba(168, 85, 247, 0.05);">
+                <div class="badge-hot">Most Popular</div>
+                <h3 class="text-xl font-bold mb-2">Tier 2</h3>
+                <div class="text-4xl font-black text-purple-500 mb-4">1000 <span class="text-sm text-gray-400">Sales</span></div>
+                <ul class="space-y-3 mb-8 text-sm text-gray-300">
+                    <li><i class="fas fa-check-circle text-green-500 mr-2"></i> ₹300 Instant Cash</li>
+                    <li><i class="fas fa-server text-blue-500 mr-2"></i> 8GB RAM Extreme Server</li>
+                    <li><i class="fas fa-clock text-orange-500 mr-2"></i> 1 Week Deadline</li>
+                </ul>
+                <button class="w-full btn-join py-3 rounded-xl font-bold uppercase text-xs">Join Challenge</button>
+            </div>
+
+            <div class="reward-card">
+                <div class="badge-hot" style="background: linear-gradient(90deg, #7c3aed, #db2777);">Elite Only</div>
+                <h3 class="text-xl font-bold mb-2">Tier 3</h3>
+                <div class="text-4xl font-black text-purple-500 mb-4">2500 <span class="text-sm text-gray-400">Sales</span></div>
+                <ul class="space-y-3 mb-8 text-sm text-gray-300">
+                    <li><i class="fas fa-check-circle text-green-500 mr-2"></i> ₹800 Instant Cash</li>
+                    <li><i class="fas fa-server text-blue-500 mr-2"></i> 16GB RAM Monster Server</li>
+                    <li><i class="fas fa-crown text-yellow-500 mr-2"></i> Demon Partner Badge</li>
+                </ul>
+                <button class="w-full btn-join py-3 rounded-xl font-bold uppercase text-xs">Join Challenge</button>
+            </div>
+
+        </div>
+
+        <div class="mt-20 p-8 rounded-[40px] bg-white/5 border border-white/10 text-center max-w-4xl backdrop-blur-md">
+            <h4 class="text-2xl font-bold mb-4">कैसे शुरू करें?</h4>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div class="p-4">
+                    <div class="text-purple-500 text-3xl mb-2">01</div>
+                    <p class="text-xs font-bold text-gray-400">रजिस्टर करें और अपना यूनिक लिंक प्राप्त करें।</p>
+                </div>
+                <div class="p-4">
+                    <div class="text-purple-500 text-3xl mb-2">02</div>
+                    <p class="text-xs font-bold text-gray-400">अपनी कम्युनिटी में सेल्स प्रमोट करें।</p>
+                </div>
+                <div class="p-4">
+                    <div class="text-purple-500 text-3xl mb-2">03</div>
+                    <p class="text-xs font-bold text-gray-400">टारगेट पूरा करें और रिवॉर्ड क्लेम करें।</p>
+                </div>
+            </div>
+            <a href="https://discord.gg/yourlink" class="inline-flex mt-8 items-center gap-3 text-purple-400 font-bold hover:text-white transition">
+                <i class="fab fa-discord"></i> Contact on Discord for more info
+            </a>
+        </div>
+    </section>
+
+</body>
+</html>
+
