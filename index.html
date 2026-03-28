@@ -1,129 +1,297 @@
 <!DOCTYPE html>
-<html lang="hi">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DeployX Cloud | Next-Gen Hosting</title>
+    <title>DEPLOY X CLOUD | Palworld Next-Gen</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;700&display=swap" rel="stylesheet">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    
     <style>
-        body { font-family: 'Inter', sans-serif; background-color: #050505; color: white; overflow-x: hidden; }
-        .glass { background: rgba(255, 255, 255, 0.03); backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 20px; }
-        .loader-wrapper { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #000; z-index: 9999; display: flex; justify-content: center; align-items: center; transition: opacity 0.8s ease; }
-        .glow-button { background: linear-gradient(90deg, #3b82f6, #8b5cf6); transition: 0.3s; box-shadow: 0 0 15px rgba(59, 130, 246, 0.5); }
-        .glow-button:hover { transform: translateY(-3px); box-shadow: 0 0 30px rgba(139, 92, 246, 0.8); }
-        .card-hover:hover { transform: scale(1.05); transition: 0.4s ease; border-color: #3b82f6; }
-        .pal-bg { background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&q=80&w=1200'); background-size: cover; background-position: center; }
+        body { font-family: 'Inter', sans-serif; background-color: #050505; color: white; overflow: hidden; }
+        .glass-panel { background: rgba(10, 10, 10, 0.7); backdrop-filter: blur(20px); border: 1px solid rgba(255,255,255,0.1); border-radius: 20px; box-shadow: 0 0 30px rgba(0,0,0,0.5); }
+        .glow-green { box-shadow: 0 0 20px rgba(74, 222, 128, 0.4); }
+        .step-inactive { opacity: 0; pointer-events: none; transform: scale(0.9); }
+        .step-active { opacity: 1; pointer-events: auto; transform: scale(1); }
+        .step-container { transition: all 0.6s cubic-bezier(0.23, 1, 0.32, 1); }
+        
+        /* Minecraft Loader Styles */
+        #minecraft-loader { transition: opacity 0.5s ease; }
+        .mc-icon-border { border: 2px solid #4ade80; border-radius: 12px; position: relative; width: 60px; height: 60px; display: flex; justify-content: center; align-items: center; }
+        .mc-icon-border::after { content: ''; position: absolute; top: -10px; left: -10px; right: -10px; bottom: -10px; border: 1px solid rgba(74, 222, 128, 0.2); border-radius: 20px; animation: mc-pulse 2s infinite; }
+        @keyframes mc-pulse { 0% { transform: scale(1); opacity: 1; } 100% { transform: scale(1.3); opacity: 0; } }
+        .mc-loading-bars { display: flex; gap: 4px; }
+        .mc-bar { width: 4px; height: 20px; background: #4ade80; animation: mc-bars-anim 1s infinite ease-in-out; }
+        .mc-bar:nth-child(1) { animation-delay: -0.4s; }
+        .mc-bar:nth-child(2) { animation-delay: -0.3s; }
+        .mc-bar:nth-child(3) { animation-delay: -0.2s; }
+        .mc-bar:nth-child(4) { animation-delay: -0.1s; }
+        @keyframes mc-bars-anim { 0%, 40%, 100% { transform: scaleY(0.4); } 20% { transform: scaleY(1); } }
+        #mc-progress { height: 3px; background: rgba(255,255,255,0.1); width: 100%; border-radius: 5px; margin-top: 15px; position: relative; }
+        #mc-progress-fill { height: 100%; background: #4ade80; width: 0%; border-radius: 5px; transition: width 0.1s linear; }
+
+        /* General UI Elements */
+        .option-card { border: 1px solid rgba(255,255,255,0.1); background: rgba(255,255,255,0.02); transition: 0.3s; }
+        .option-card:hover, .option-card.selected { border-color: #4ade80; background: rgba(74, 222, 128, 0.1); }
+        .primary-btn { background-color: #7c3aed; color: white; padding: 12px 24px; border-radius: 12px; transition: 0.3s; box-shadow: 0 4px 15px rgba(124, 58, 237, 0.3); }
+        .primary-btn:hover { background-color: #6d28d9; transform: translateY(-2px); }
+        .plans-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; width: 100%; }
+        
+        #final-plans { max-height: 80vh; overflow-y: auto; padding-right: 10px; }
+        #final-plans::-webkit-scrollbar { width: 6px; }
+        #final-plans::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 3px; }
     </style>
 </head>
-<body>
+<body class="relative flex justify-center items-center h-screen w-screen p-4">
 
-    <div id="loader" class="loader-wrapper">
-        <div class="text-5xl font-bold animate__animated animate__pulse animate__infinite">
-            <span class="text-blue-500">Deploy</span><span class="text-purple-500">X</span>
-        </div>
+    <div class="fixed inset-0 bg-[#050505] z-0">
+        <div class="absolute inset-0 opacity-30" style="background-image: radial-gradient(rgba(255,255,255,0.1) 1px, transparent 1px); background-size: 50px 50px;"></div>
     </div>
 
-    <nav class="p-6 flex justify-between items-center max-w-7xl mx-auto">
-        <div class="text-2xl font-bold tracking-tighter">Deploy<span class="text-blue-500">X</span></div>
-        <div class="space-x-8 hidden md:block text-sm uppercase tracking-widest opacity-70">
-            <a href="#home" class="hover:text-blue-400">Home</a>
-            <a href="#palworld" class="hover:text-blue-400">Palworld</a>
-            <a href="#pricing" class="hover:text-blue-400">Pricing</a>
-        </div>
-        <button class="px-6 py-2 glass text-sm rounded-full">Login</button>
-    </nav>
-
-    <header id="home" class="h-screen flex flex-col justify-center items-center text-center px-4">
-        <h1 class="text-6xl md:text-8xl font-bold mb-6 animate__animated animate__fadeInUp">
-            The Future of <br><span class="text-blue-500 italic">Cloud Hosting</span>
-        </h1>
-        <p class="max-w-xl opacity-60 text-lg mb-10 animate__animated animate__fadeInUp animate__delay-1s">
-            Advanced nodes for high-performance gaming and enterprise applications. Scale instantly with DeployX Cloud.
-        </p>
-        <div class="flex space-x-4 animate__animated animate__fadeInUp animate__delay-2s">
-            <button class="glow-button px-10 py-4 rounded-xl font-bold">Start Deploying</button>
-            <button class="glass px-10 py-4 rounded-xl font-bold">Learn More</button>
-        </div>
-    </header>
-
-    <section id="palworld" class="py-24 pal-bg">
-        <div class="max-w-6xl mx-auto px-6 grid md:grid-cols-2 gap-12 items-center">
-            <div class="glass p-8 animate__animated animate__fadeInLeft">
-                <h2 class="text-4xl font-bold mb-4">Palworld <span class="text-yellow-400">Optimized</span></h2>
-                <p class="opacity-80 mb-6">हमारे विशेष सर्वर Palworld के लिए 24/7 अपटाइम और लो-लेटेंसी (Low Latency) सुनिश्चित करते हैं। एंटी-रेड सुरक्षा और इंस्टेंट सेटअप के साथ।</p>
-                <ul class="space-y-3">
-                    <li class="flex items-center">✅ One-Click Install</li>
-                    <li class="flex items-center">✅ Ryzen 9 Processors</li>
-                    <li class="flex items-center">✅ Dedicated IP</li>
-                </ul>
+    <main class="glass-panel w-full max-w-7xl h-[90vh] z-10 p-8 flex flex-col relative overflow-hidden animate__animated animate__fadeIn">
+        
+        <header class="flex justify-between items-center mb-8 pb-4 border-b border-white/10">
+            <div class="flex items-center gap-2">
+                <div class="p-3 rounded-xl border border-blue-400 text-blue-400 bg-blue-950/30">
+                    <i class='bx bx-cloud-light text-2xl' ></i>
+                </div>
+                <div class="text-3xl font-bold tracking-tighter">DEPLOY <span class="text-blue-500">X</span> CLOUD</div>
             </div>
-            <div class="rounded-3xl overflow-hidden shadow-2xl animate__animated animate__fadeInRight">
-                <img src="https://palsfera.com/wp-content/uploads/2024/01/palworld-server.jpg" alt="Palworld Gameplay" class="w-full">
+            <div class="flex items-center gap-6 text-sm uppercase tracking-widest opacity-60">
+                <span>Dashboard</span>
+                <span>Servers</span>
+                <span class="text-blue-400">Palworld</span>
+                <span>Billing</span>
             </div>
-        </div>
-    </section>
+            <button class="px-5 py-2 glass rounded-lg text-sm border border-white/10">Sign Out</button>
+        </header>
 
-    <section id="pricing" class="py-24 px-6 text-center">
-        <h2 class="text-4xl font-bold mb-16">Choose Your <span class="text-purple-500">Power</span></h2>
-        <div class="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+        <div class="flex-grow relative">
             
-            <div class="glass p-10 card-hover">
-                <h3 class="text-xl font-bold mb-4">Basic Node</h3>
-                <div class="text-4xl font-bold mb-6">₹499<span class="text-sm opacity-50">/mo</span></div>
-                <hr class="opacity-10 mb-6">
-                <ul class="text-left space-y-4 mb-8 opacity-70">
-                    <li>🔹 4GB RAM (DDR5)</li>
-                    <li>🔹 2 vCPU Cores</li>
-                    <li>🔹 50GB NVMe SSD</li>
-                </ul>
-                <button class="w-full py-3 border border-white/20 rounded-lg hover:bg-white hover:text-black">Order Now</button>
+            <div id="step-service" class="step-container step-active absolute inset-0 flex flex-col items-center justify-center">
+                
+                <div class="text-center mb-16 animate__animated animate__fadeInUp">
+                    <div class="inline-flex items-center gap-2 px-6 py-2 rounded-full border border-yellow-400/20 bg-yellow-950/20 text-yellow-400 text-xs uppercase tracking-widest mb-6 glow-yellow">
+                        <i class='bx bxs-bolt text-yellow-400'></i> New: Palworld Integration
+                    </div>
+                    <h1 class="text-6xl font-bold mb-6 tracking-tight">Deploy Your <span class="text-blue-500">Game Server</span></h1>
+                    <p class="max-w-2xl opacity-60 text-lg mb-10">Select your base service. High-performance, low-latency infrastructure with integrated DDoS protection and 24/7 expert support.</p>
+                </div>
+
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-6 w-full max-w-5xl animate__animated animate__fadeInUp animate__delay-1s">
+                    <div onclick="nextStep('location')" class="option-card p-6 rounded-2xl cursor-pointer text-center relative border-yellow-500 glow-yellow group">
+                        <div class="absolute top-2 right-2 bg-yellow-500 text-black px-3 py-0.5 rounded-full text-xs font-bold">ALPHA</div>
+                        <i class='bx bxs-category text-4xl mb-4 text-yellow-400' ></i>
+                        <div class="font-bold text-lg mb-1">Palworld</div>
+                        <p class="text-xs opacity-50">Latest Update Supported</p>
+                    </div>
+                    <div class="option-card p-6 rounded-2xl cursor-pointer text-center group">
+                        <i class='bx bx-dice-5 text-4xl mb-4 group-hover:text-green-400' ></i>
+                        <div class="font-bold text-lg mb-1">Minecraft</div>
+                        <p class="text-xs opacity-50">Java & Bedrock</p>
+                    </div>
+                    <div class="option-card p-6 rounded-2xl cursor-pointer text-center group">
+                        <i class='bx bxl-nodejs text-4xl mb-4 group-hover:text-green-400' ></i>
+                        <div class="font-bold text-lg mb-1">Node.js App</div>
+                        <p class="text-xs opacity-50">API & Backend</p>
+                    </div>
+                    <div class="option-card p-6 rounded-2xl cursor-pointer text-center group">
+                        <i class='bx bx-data text-4xl mb-4 group-hover:text-green-400' ></i>
+                        <div class="font-bold text-lg mb-1">Databases</div>
+                        <p class="text-xs opacity-50">MySQL & Mongo</p>
+                    </div>
+                </div>
+
+                <div class="flex items-center gap-2 text-sm text-green-400 mt-16 p-4 glass rounded-xl border border-green-400/20 bg-green-950/20">
+                    <i class='bx bx-check-shield text-xl' ></i>
+                    DDoS Protection Included by default on all services.
+                </div>
             </div>
 
-            <div class="glass p-10 card-hover border-blue-500/50 relative overflow-hidden">
-                <div class="absolute top-0 right-0 bg-blue-500 text-xs px-4 py-1">POPULAR</div>
-                <h3 class="text-xl font-bold mb-4">Palworld Pro</h3>
-                <div class="text-4xl font-bold mb-6 text-blue-400">₹999<span class="text-sm opacity-50">/mo</span></div>
-                <hr class="opacity-10 mb-6">
-                <ul class="text-left space-y-4 mb-8">
-                    <li>🚀 12GB RAM (DDR5)</li>
-                    <li>🚀 4 vCPU Cores</li>
-                    <li>🚀 100GB NVMe SSD</li>
-                </ul>
-                <button class="w-full py-3 glow-button rounded-lg">Order Now</button>
+            <div id="minecraft-loader" class="absolute inset-0 flex flex-col items-center justify-center opacity-0 pointer-events-none z-50 bg-[#050505]/95 rounded-2xl">
+                <div class="mc-icon-border mb-8">
+                    <i class='bx bx-dice-5 text-4xl text-green-400'></i>
+                </div>
+                <h2 class="text-2xl font-bold tracking-tight mb-5">Minecraft Hosting</h2>
+                <div class="mc-loading-bars mb-3">
+                    <div class="mc-bar"></div>
+                    <div class="mc-bar"></div>
+                    <div class="mc-bar"></div>
+                    <div class="mc-bar"></div>
+                </div>
+                <p class="text-sm uppercase tracking-widest opacity-60 mb-6">LOADING PLANS...</p>
+                <div id="mc-progress"><div id="mc-progress-fill"></div></div>
             </div>
 
-            <div class="glass p-10 card-hover">
-                <h3 class="text-xl font-bold mb-4">Enterprise</h3>
-                <div class="text-4xl font-bold mb-6">₹1999<span class="text-sm opacity-50">/mo</span></div>
-                <hr class="opacity-10 mb-6">
-                <ul class="text-left space-y-4 mb-8 opacity-70">
-                    <li>💎 32GB RAM</li>
-                    <li>💎 8 vCPU Cores</li>
-                    <li>💎 500GB NVMe SSD</li>
-                </ul>
-                <button class="w-full py-3 border border-white/20 rounded-lg hover:bg-white hover:text-black">Order Now</button>
+            <div id="step-location" class="step-container step-inactive absolute inset-0 flex flex-col">
+                <h2 class="text-4xl font-bold mb-10 flex items-center gap-4 animate__animated animate__fadeInUp">
+                    <i class='bx bx-map-pin text-blue-500' ></i> 
+                    Select Location & Processor
+                </h2>
+                <div class="flex-grow grid grid-cols-2 gap-10">
+                    <div class="glass-panel p-8 border border-white/5 animate__animated animate__fadeInUp animate__delay-1s">
+                        <h3 class="text-xl font-bold mb-6 flex items-center gap-2"><i class='bx bx-map-alt' ></i> Global Locations</h3>
+                        <div class="space-y-4">
+                            <div class="option-card p-5 rounded-xl flex items-center gap-4 selected cursor-pointer">
+                                <img src="https://flagcdn.com/w80/sg.png" alt="SG" class="w-10 h-7 object-cover rounded">
+                                <div>
+                                    <div class="font-bold">Singapore, SG</div>
+                                    <div class="text-xs text-green-400">Lowest Ping (10ms)</div>
+                                </div>
+                            </div>
+                            <div class="option-card p-5 rounded-xl flex items-center gap-4 cursor-pointer">
+                                <img src="https://flagcdn.com/w80/in.png" alt="IN" class="w-10 h-7 object-cover rounded">
+                                <div>
+                                    <div class="font-bold">Mumbai, IN</div>
+                                    <div class="text-xs opacity-60">Avg Ping (35ms)</div>
+                                </div>
+                            </div>
+                            <div class="option-card p-5 rounded-xl flex items-center gap-4 cursor-pointer opacity-50">
+                                <img src="https://flagcdn.com/w80/us.png" alt="US" class="w-10 h-7 object-cover rounded">
+                                <div>
+                                    <div class="font-bold">Frankfurt, DE</div>
+                                    <div class="text-xs opacity-60">Coming Soon</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="glass-panel p-8 border border-white/5 animate__animated animate__fadeInUp animate__delay-1s">
+                        <h3 class="text-xl font-bold mb-6 flex items-center gap-2"><i class='bx bx-chip' ></i> Compute Power</h3>
+                        <div class="space-y-4">
+                            <div class="option-card p-5 rounded-xl flex items-center gap-4 selected cursor-pointer">
+                                <i class='bx bxl-amd text-3xl text-red-500'></i>
+                                <div>
+                                    <div class="font-bold">AMD Ryzen 9 7950X</div>
+                                    <div class="text-xs text-yellow-400">Extreme Performance for Large Palworld Servers</div>
+                                </div>
+                            </div>
+                            <div class="option-card p-5 rounded-xl flex items-center gap-4 cursor-pointer">
+                                <i class='bx bxl-intel text-3xl text-blue-500'></i>
+                                <div>
+                                    <div class="font-bold">Intel Core i9-13900K</div>
+                                    <div class="text-xs opacity-60">High Clock Speed for Responsive Gaming</div>
+                                </div>
+                            </div>
+                        </div>
+                        <button onclick="nextStepWithLoader('plans')" class="primary-btn w-full mt-10">Continue to Plans <i class='bx bx-right-arrow-alt' ></i></button>
+                    </div>
+                </div>
+            </div>
+
+            <div id="step-plans" class="step-container step-inactive absolute inset-0 flex flex-col items-center justify-center">
+                
+                <h2 class="text-4xl font-bold mb-10 flex items-center gap-4 animate__animated animate__fadeInUp">
+                    <i class='bx bx-dollar-circle text-green-500' ></i> Select Your Plan
+                </h2>
+                
+                <div id="final-plans" class="w-full">
+                    <div class="plans-grid">
+                        
+                        <div class="option-card p-8 rounded-2xl flex flex-col animate__animated animate__fadeInUp animate__delay-1s">
+                            <div class="text-xs opacity-60 mb-2">STARTER</div>
+                            <h3 class="text-xl font-bold mb-4">Pal Starter</h3>
+                            <div class="text-3xl font-bold mb-6">₹499<span class="text-sm opacity-50">/mo</span></div>
+                            <hr class="opacity-10 mb-6">
+                            <ul class="space-y-4 mb-10 text-sm opacity-80 flex-grow">
+                                <li>4GB DDR5 RAM</li>
+                                <li>2 vCPU (Ryzen 9)</li>
+                                <li>50GB NVMe SSD</li>
+                                <li>10 Slots</li>
+                            </ul>
+                            <button class="primary-btn w-full">Select Plan</button>
+                        </div>
+                        
+                        <div class="option-card p-8 rounded-2xl flex flex-col border-yellow-500 glow-yellow relative animate__animated animate__fadeInUp animate__delay-1s">
+                            <div class="absolute top-2 right-2 bg-yellow-500 text-black px-3 py-0.5 rounded-full text-xs font-bold">POPULAR</div>
+                            <div class="text-xs opacity-60 mb-2">PERFORMANCE</div>
+                            <h3 class="text-xl font-bold mb-4 text-yellow-400">Pal Pro</h3>
+                            <div class="text-3xl font-bold mb-6 text-yellow-400">₹1499<span class="text-sm text-white opacity-50">/mo</span></div>
+                            <hr class="opacity-10 mb-6">
+                            <ul class="space-y-4 mb-10 text-sm flex-grow">
+                                <li>16GB DDR5 RAM</li>
+                                <li>4 vCPU (Ryzen 9)</li>
+                                <li>150GB NVMe SSD</li>
+                                <li>32 Slots</li>
+                                <li class="text-green-400">Advanced Anti-Raid Integration</li>
+                            </ul>
+                            <button class="primary-btn w-full glow-purple">Select Plan</button>
+                        </div>
+                        
+                        <div class="option-card p-8 rounded-2xl flex flex-col animate__animated animate__fadeInUp animate__delay-1s">
+                            <div class="text-xs opacity-60 mb-2">ULTIMATE</div>
+                            <h3 class="text-xl font-bold mb-4">Server King</h3>
+                            <div class="text-3xl font-bold mb-6">₹3499<span class="text-sm opacity-50">/mo</span></div>
+                            <hr class="opacity-10 mb-6">
+                            <ul class="space-y-4 mb-10 text-sm opacity-80 flex-grow">
+                                <li>32GB DDR5 RAM</li>
+                                <li>8 vCPU (Ryzen 9)</li>
+                                <li>300GB NVMe SSD</li>
+                                <li>Unlimited Slots</li>
+                            </ul>
+                            <button class="primary-btn w-full">Select Plan</button>
+                        </div>
+                    </div>
+                </div>
             </div>
 
         </div>
-    </section>
 
-    <footer class="py-12 text-center opacity-40 text-sm">
-        <p>&copy; 2026 DeployX Cloud. Built for Performance.</p>
-    </footer>
+    </main>
 
     <script>
-        // Loading screen remove logic
-        window.addEventListener('load', () => {
-            const loader = document.getElementById('loader');
-            setTimeout(() => {
-                loader.style.opacity = '0';
-                setTimeout(() => {
-                    loader.style.display = 'none';
-                }, 800);
-            }, 1500); // 1.5 seconds loader duration
-        });
+        // NAVIGATION LOGIC
+        const steps = ['service', 'location', 'plans'];
+        let currentStepIndex = 0;
+
+        function nextStep(stepName) {
+            // Hide current
+            document.getElementById(`step-${steps[currentStepIndex]}`).classList.remove('step-active');
+            document.getElementById(`step-${steps[currentStepIndex]}`).classList.add('step-inactive');
+            
+            // Show next
+            document.getElementById(`step-${stepName}`).classList.remove('step-inactive');
+            document.getElementById(`step-${stepName}`).classList.add('step-active');
+            
+            // Update index
+            currentStepIndex = steps.indexOf(stepName);
+        }
+
+        // STEP ADVANCE WITH THE MINECRAFT-STYLE LOADER (FROM 1.png)
+        function nextStepWithLoader(stepName) {
+            const loader = document.getElementById('minecraft-loader');
+            const progressFill = document.getElementById('mc-progress-fill');
+
+            // Hide the processor selection view
+            document.getElementById(`step-location`).classList.remove('step-active');
+            document.getElementById(`step-location`).classList.add('step-inactive');
+
+            // Show Loader
+            loader.style.opacity = '1';
+            loader.style.pointerEvents = 'auto';
+
+            // Simulate progress bar filling (just like image 1.png)
+            let progress = 0;
+            const interval = setInterval(() => {
+                progress += Math.random() * 8; // Random increments for realism
+                if (progress >= 100) {
+                    progressFill.style.width = '100%';
+                    clearInterval(interval);
+                    
+                    // Loader animation complete, hide loader
+                    setTimeout(() => {
+                        loader.style.opacity = '0';
+                        loader.style.pointerEvents = 'none';
+
+                        // Show next step (Plans)
+                        nextStep(stepName);
+                    }, 500); // Small pause after filling
+                } else {
+                    progressFill.style.width = progress + '%';
+                }
+            }, 150); // Speed of progress filling
+        }
     </script>
 </body>
 </html>
