@@ -1,152 +1,129 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="hi">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Demon Nodes | Reseller Program</title>
+    <title>DeployX Cloud | Next-Gen Hosting</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;700&display=swap" rel="stylesheet">
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap');
-
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: 'Plus Jakarta Sans', sans-serif; background: #050505; color: white; overflow-x: hidden; }
-
-        .reseller-hero {
-            position: relative;
-            min-height: 100vh;
-            width: 100%;
-            background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.8)), url('image_6.png');
-            background-size: cover;
-            background-position: center;
-            background-attachment: fixed;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            padding: 100px 20px;
-        }
-
-        .glow-text { text-shadow: 0 0 20px rgba(168, 85, 247, 0.8); }
-
-        .reward-card {
-            background: rgba(255, 255, 255, 0.03);
-            backdrop-filter: blur(15px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 24px;
-            padding: 30px;
-            transition: all 0.4s ease;
-        }
-
-        .reward-card:hover {
-            transform: translateY(-10px);
-            border-color: #a855f7;
-            box-shadow: 0 0 30px rgba(168, 85, 247, 0.3);
-        }
-
-        /* Modal / Popup Style */
-        #ticketModal {
-            display: none;
-            position: fixed;
-            inset: 0;
-            background: rgba(0,0,0,0.85);
-            backdrop-filter: blur(10px);
-            z-index: 1000;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .modal-content {
-            background: #111;
-            border: 1px solid #a855f7;
-            padding: 40px;
-            border-radius: 30px;
-            max-width: 450px;
-            text-align: center;
-            box-shadow: 0 0 50px rgba(168, 85, 247, 0.2);
-        }
+        body { font-family: 'Inter', sans-serif; background-color: #050505; color: white; overflow-x: hidden; }
+        .glass { background: rgba(255, 255, 255, 0.03); backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 20px; }
+        .loader-wrapper { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #000; z-index: 9999; display: flex; justify-content: center; align-items: center; transition: opacity 0.8s ease; }
+        .glow-button { background: linear-gradient(90deg, #3b82f6, #8b5cf6); transition: 0.3s; box-shadow: 0 0 15px rgba(59, 130, 246, 0.5); }
+        .glow-button:hover { transform: translateY(-3px); box-shadow: 0 0 30px rgba(139, 92, 246, 0.8); }
+        .card-hover:hover { transform: scale(1.05); transition: 0.4s ease; border-color: #3b82f6; }
+        .pal-bg { background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&q=80&w=1200'); background-size: cover; background-position: center; }
     </style>
 </head>
 <body>
 
-    <section class="reseller-hero">
-        <div class="text-center mb-16">
-            <h1 class="text-5xl md:text-7xl font-black mb-6 tracking-tighter glow-text uppercase">
-                Reseller <span class="text-purple-500">Program</span>
-            </h1>
-            <p class="text-gray-400 max-w-2xl mx-auto text-lg">
-                Join Demon Nodes, drive sales, and earn massive cash rewards along with high-performance free servers. 
-                <span class="text-white block mt-2 font-bold">1 Week Target Challenges!</span>
-            </p>
-        </div>
-
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-8 w-full max-w-6xl px-4">
-            
-            <div class="reward-card">
-                <h3 class="text-xl font-bold mb-2">Starter Tier</h3>
-                <div class="text-4xl font-black text-purple-500 mb-4">500 <span class="text-sm text-gray-400">Sales</span></div>
-                <ul class="space-y-3 mb-8 text-sm text-gray-300">
-                    <li><i class="fas fa-money-bill-wave text-green-500 mr-2"></i> ₹150 Instant Cash</li>
-                    <li><i class="fas fa-server text-blue-500 mr-2"></i> 4GB RAM Dedicated Server</li>
-                    <li><i class="fas fa-stopwatch text-orange-500 mr-2"></i> 1 Week Deadline</li>
-                </ul>
-                <button onclick="openModal()" class="w-full bg-purple-600 hover:bg-purple-700 py-3 rounded-xl font-bold uppercase text-xs transition">Join Challenge</button>
-            </div>
-
-            <div class="reward-card border-purple-500/50" style="background: rgba(168, 85, 247, 0.05);">
-                <h3 class="text-xl font-bold mb-2">Pro Tier</h3>
-                <div class="text-4xl font-black text-purple-500 mb-4">1000 <span class="text-sm text-gray-400">Sales</span></div>
-                <ul class="space-y-3 mb-8 text-sm text-gray-300">
-                    <li><i class="fas fa-money-bill-wave text-green-500 mr-2"></i> ₹300 Instant Cash</li>
-                    <li><i class="fas fa-server text-blue-500 mr-2"></i> 8GB RAM Extreme Server</li>
-                    <li><i class="fas fa-stopwatch text-orange-500 mr-2"></i> 1 Week Deadline</li>
-                </ul>
-                <button onclick="openModal()" class="w-full bg-purple-600 hover:bg-purple-700 py-3 rounded-xl font-bold uppercase text-xs transition">Join Challenge</button>
-            </div>
-
-            <div class="reward-card">
-                <h3 class="text-xl font-bold mb-2">Elite Tier</h3>
-                <div class="text-4xl font-black text-purple-500 mb-4">2500 <span class="text-sm text-gray-400">Sales</span></div>
-                <ul class="space-y-3 mb-8 text-sm text-gray-300">
-                    <li><i class="fas fa-money-bill-wave text-green-500 mr-2"></i> ₹800 Instant Cash</li>
-                    <li><i class="fas fa-server text-blue-500 mr-2"></i> 16GB RAM Monster Server</li>
-                    <li><i class="fas fa-crown text-yellow-500 mr-2"></i> Demon Partner Badge</li>
-                </ul>
-                <button onclick="openModal()" class="w-full bg-purple-600 hover:bg-purple-700 py-3 rounded-xl font-bold uppercase text-xs transition">Join Challenge</button>
-            </div>
-        </div>
-
-        <div class="mt-20 p-10 rounded-[40px] bg-white/5 border border-white/10 text-center max-w-4xl backdrop-blur-md">
-            <h4 class="text-2xl font-bold mb-8">How to Start?</h4>
-            <p class="text-gray-400 mb-4">Create a Ticket to Demon Nodes on our Discord server to get your unique tracking link.</p>
-            <a href="https://discord.gg/Bm2e9SvkKX" target="_blank" class="inline-flex items-center gap-3 bg-[#5865F2] hover:bg-[#4752C4] px-8 py-3 rounded-full font-bold transition">
-                <i class="fab fa-discord"></i> Join Discord Server
-            </a>
-        </div>
-    </section>
-
-    <div id="ticketModal" onclick="closeModal()">
-        <div class="modal-content" onclick="event.stopPropagation()">
-            <div class="w-20 h-20 bg-purple-500/20 rounded-full flex items-center justify-center mx-auto mb-6">
-                <i class="fas fa-ticket-alt text-3xl text-purple-500"></i>
-            </div>
-            <h2 class="text-2xl font-black mb-4 uppercase">Wait a Second!</h2>
-            <p class="text-gray-400 mb-8">To join this challenge, you must first <b>Create a Ticket</b> in our Discord server to get registered as an official reseller.</p>
-            
-            <a href="https://discord.gg/Bm2e9SvkKX" target="_blank" class="block w-full bg-purple-600 py-4 rounded-2xl font-bold uppercase tracking-widest mb-4 hover:bg-purple-700">
-                Create Ticket in Discord
-            </a>
-            <button onclick="closeModal()" class="text-gray-500 text-xs font-bold uppercase hover:text-white">Close</button>
+    <div id="loader" class="loader-wrapper">
+        <div class="text-5xl font-bold animate__animated animate__pulse animate__infinite">
+            <span class="text-blue-500">Deploy</span><span class="text-purple-500">X</span>
         </div>
     </div>
 
-    <script>
-        function openModal() {
-            document.getElementById('ticketModal').style.display = 'flex';
-        }
-        function closeModal() {
-            document.getElementById('ticketModal').style.display = 'none';
-        }
-    </script>
+    <nav class="p-6 flex justify-between items-center max-w-7xl mx-auto">
+        <div class="text-2xl font-bold tracking-tighter">Deploy<span class="text-blue-500">X</span></div>
+        <div class="space-x-8 hidden md:block text-sm uppercase tracking-widest opacity-70">
+            <a href="#home" class="hover:text-blue-400">Home</a>
+            <a href="#palworld" class="hover:text-blue-400">Palworld</a>
+            <a href="#pricing" class="hover:text-blue-400">Pricing</a>
+        </div>
+        <button class="px-6 py-2 glass text-sm rounded-full">Login</button>
+    </nav>
 
+    <header id="home" class="h-screen flex flex-col justify-center items-center text-center px-4">
+        <h1 class="text-6xl md:text-8xl font-bold mb-6 animate__animated animate__fadeInUp">
+            The Future of <br><span class="text-blue-500 italic">Cloud Hosting</span>
+        </h1>
+        <p class="max-w-xl opacity-60 text-lg mb-10 animate__animated animate__fadeInUp animate__delay-1s">
+            Advanced nodes for high-performance gaming and enterprise applications. Scale instantly with DeployX Cloud.
+        </p>
+        <div class="flex space-x-4 animate__animated animate__fadeInUp animate__delay-2s">
+            <button class="glow-button px-10 py-4 rounded-xl font-bold">Start Deploying</button>
+            <button class="glass px-10 py-4 rounded-xl font-bold">Learn More</button>
+        </div>
+    </header>
+
+    <section id="palworld" class="py-24 pal-bg">
+        <div class="max-w-6xl mx-auto px-6 grid md:grid-cols-2 gap-12 items-center">
+            <div class="glass p-8 animate__animated animate__fadeInLeft">
+                <h2 class="text-4xl font-bold mb-4">Palworld <span class="text-yellow-400">Optimized</span></h2>
+                <p class="opacity-80 mb-6">हमारे विशेष सर्वर Palworld के लिए 24/7 अपटाइम और लो-लेटेंसी (Low Latency) सुनिश्चित करते हैं। एंटी-रेड सुरक्षा और इंस्टेंट सेटअप के साथ।</p>
+                <ul class="space-y-3">
+                    <li class="flex items-center">✅ One-Click Install</li>
+                    <li class="flex items-center">✅ Ryzen 9 Processors</li>
+                    <li class="flex items-center">✅ Dedicated IP</li>
+                </ul>
+            </div>
+            <div class="rounded-3xl overflow-hidden shadow-2xl animate__animated animate__fadeInRight">
+                <img src="https://palsfera.com/wp-content/uploads/2024/01/palworld-server.jpg" alt="Palworld Gameplay" class="w-full">
+            </div>
+        </div>
+    </section>
+
+    <section id="pricing" class="py-24 px-6 text-center">
+        <h2 class="text-4xl font-bold mb-16">Choose Your <span class="text-purple-500">Power</span></h2>
+        <div class="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+            
+            <div class="glass p-10 card-hover">
+                <h3 class="text-xl font-bold mb-4">Basic Node</h3>
+                <div class="text-4xl font-bold mb-6">₹499<span class="text-sm opacity-50">/mo</span></div>
+                <hr class="opacity-10 mb-6">
+                <ul class="text-left space-y-4 mb-8 opacity-70">
+                    <li>🔹 4GB RAM (DDR5)</li>
+                    <li>🔹 2 vCPU Cores</li>
+                    <li>🔹 50GB NVMe SSD</li>
+                </ul>
+                <button class="w-full py-3 border border-white/20 rounded-lg hover:bg-white hover:text-black">Order Now</button>
+            </div>
+
+            <div class="glass p-10 card-hover border-blue-500/50 relative overflow-hidden">
+                <div class="absolute top-0 right-0 bg-blue-500 text-xs px-4 py-1">POPULAR</div>
+                <h3 class="text-xl font-bold mb-4">Palworld Pro</h3>
+                <div class="text-4xl font-bold mb-6 text-blue-400">₹999<span class="text-sm opacity-50">/mo</span></div>
+                <hr class="opacity-10 mb-6">
+                <ul class="text-left space-y-4 mb-8">
+                    <li>🚀 12GB RAM (DDR5)</li>
+                    <li>🚀 4 vCPU Cores</li>
+                    <li>🚀 100GB NVMe SSD</li>
+                </ul>
+                <button class="w-full py-3 glow-button rounded-lg">Order Now</button>
+            </div>
+
+            <div class="glass p-10 card-hover">
+                <h3 class="text-xl font-bold mb-4">Enterprise</h3>
+                <div class="text-4xl font-bold mb-6">₹1999<span class="text-sm opacity-50">/mo</span></div>
+                <hr class="opacity-10 mb-6">
+                <ul class="text-left space-y-4 mb-8 opacity-70">
+                    <li>💎 32GB RAM</li>
+                    <li>💎 8 vCPU Cores</li>
+                    <li>💎 500GB NVMe SSD</li>
+                </ul>
+                <button class="w-full py-3 border border-white/20 rounded-lg hover:bg-white hover:text-black">Order Now</button>
+            </div>
+
+        </div>
+    </section>
+
+    <footer class="py-12 text-center opacity-40 text-sm">
+        <p>&copy; 2026 DeployX Cloud. Built for Performance.</p>
+    </footer>
+
+    <script>
+        // Loading screen remove logic
+        window.addEventListener('load', () => {
+            const loader = document.getElementById('loader');
+            setTimeout(() => {
+                loader.style.opacity = '0';
+                setTimeout(() => {
+                    loader.style.display = 'none';
+                }, 800);
+            }, 1500); // 1.5 seconds loader duration
+        });
+    </script>
 </body>
 </html>
